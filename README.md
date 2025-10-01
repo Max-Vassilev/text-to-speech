@@ -21,3 +21,7 @@ A simple web app that converts text into audio using AI-powered Text-to-Speech, 
 
 <img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/0e731e23-5430-418a-ac12-de1b61084aa1" />
 
+
+<img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/baca52f0-ac6d-40cc-aa55-a3c845dc9478" />
+
+<img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/ac610a4b-e345-48c8-8e96-50f0554212dc" />
