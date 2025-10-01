@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { FaPlay, FaPause, FaUndo, FaDownload } from "react-icons/fa";
+import { FaPlay, FaStop, FaUndo, FaRedo, FaDownload } from "react-icons/fa";
 import "./App.css";
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [audioUrl, setAudioUrl] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -25,6 +26,7 @@ function App() {
       );
       const url = URL.createObjectURL(response.data);
       setAudioUrl(url);
+      setIsPlaying(false);
     } catch (e) {
       console.error(e);
     }
@@ -32,6 +34,33 @@ function App() {
   };
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
+
+  const togglePlay = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const rewind = () => {
+    if (!audioRef.current) return;
+    audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 10);
+  };
+
+  const forward = () => {
+    if (!audioRef.current) return;
+    audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + 10);
+  };
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+    const handleEnded = () => setIsPlaying(false);
+    audioRef.current.addEventListener("ended", handleEnded);
+    return () => audioRef.current.removeEventListener("ended", handleEnded);
+  }, [audioRef]);
 
   return (
     <div className="app-container">
@@ -52,25 +81,14 @@ function App() {
           {loading ? "Generating..." : "Generate Audio"}
         </button>
         <div className="audio-controls">
-          <button
-            disabled={!audioUrl}
-            onClick={() => audioRef.current?.play()}
-          >
-            <FaPlay />
-          </button>
-          <button
-            disabled={!audioUrl}
-            onClick={() => audioRef.current?.pause()}
-          >
-            <FaPause />
-          </button>
-          <button
-            disabled={!audioUrl}
-            onClick={() => {
-              if (audioRef.current) audioRef.current.currentTime = 0;
-            }}
-          >
+          <button disabled={!audioUrl} onClick={rewind}>
             <FaUndo />
+          </button>
+          <button disabled={!audioUrl} onClick={togglePlay}>
+            {isPlaying ? <FaStop /> : <FaPlay />}
+          </button>
+          <button disabled={!audioUrl} onClick={forward}>
+            <FaRedo />
           </button>
           <a href={audioUrl || "#"} download="speech.mp3">
             <button disabled={!audioUrl}>
