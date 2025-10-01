@@ -13,7 +13,7 @@ A simple web app that converts text into audio using AI-powered Text-to-Speech, 
 
 - **Frontend:** React + Vite
 - **Backend:** FastAPI
-- **Audio Generation:** OpenAI TTS
+- **Audio Generation:** gTTS
 
 ## Gallery
 
