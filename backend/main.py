@@ -1,34 +1,33 @@
-from fastapi import FastAPI, UploadFile
+# main.py
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from gtts import gTTS
 import io
-import openai
-import os
-
-# openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI()
-from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # your react dev server
+    allow_origins=["http://localhost:5173"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 @app.post("/tts")
-async def tts(data: dict):
+async def tts(request: Request):
+    data = await request.json()
     text = data.get("text", "")
     if not text:
         return {"error": "No text provided"}
-    
-    print(text)
 
-    # response = openai.audio.speech.create(
-    #     model="gpt-4o-mini-tts",
-    #     voice="alloy",
-    #     input=text
-    # )
-    # audio_bytes = io.BytesIO(response.read())
-    # return StreamingResponse(audio_bytes, media_type="audio/mpeg")
+    tts = gTTS(text=text, lang="en")
+    audio_bytes = io.BytesIO()
+    tts.write_to_fp(audio_bytes)
+    audio_bytes.seek(0)
+
+    return StreamingResponse(
+        audio_bytes,
+        media_type="audio/mpeg",
+        headers={"Content-Disposition": "attachment; filename=tts.mp3"}
+    )
