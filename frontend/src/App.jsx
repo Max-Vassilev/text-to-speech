@@ -18,7 +18,11 @@ function App() {
     if (!text) return;
     setLoading(true);
     try {
-      const response = await axios.post("http://127.0.0.1:8000/tts", { text }, { responseType: "blob" });
+      const response = await axios.post(
+        "http://127.0.0.1:8000/tts",
+        { text },
+        { responseType: "blob" }
+      );
       const url = URL.createObjectURL(response.data);
       setAudioUrl(url);
     } catch (e) {
@@ -47,17 +51,34 @@ function App() {
         >
           {loading ? "Generating..." : "Generate Audio"}
         </button>
-        {audioUrl && (
-          <div className="audio-controls">
-            <button onClick={() => audioRef.current.play()}><FaPlay /></button>
-            <button onClick={() => audioRef.current.pause()}><FaPause /></button>
-            <button onClick={() => { audioRef.current.currentTime = 0; }}><FaUndo /></button>
-            <a href={audioUrl} download="speech.mp3">
-              <button><FaDownload /></button>
-            </a>
-            <audio ref={audioRef} src={audioUrl} />
-          </div>
-        )}
+        <div className="audio-controls">
+          <button
+            disabled={!audioUrl}
+            onClick={() => audioRef.current?.play()}
+          >
+            <FaPlay />
+          </button>
+          <button
+            disabled={!audioUrl}
+            onClick={() => audioRef.current?.pause()}
+          >
+            <FaPause />
+          </button>
+          <button
+            disabled={!audioUrl}
+            onClick={() => {
+              if (audioRef.current) audioRef.current.currentTime = 0;
+            }}
+          >
+            <FaUndo />
+          </button>
+          <a href={audioUrl || "#"} download="speech.mp3">
+            <button disabled={!audioUrl}>
+              <FaDownload />
+            </button>
+          </a>
+        </div>
+        {audioUrl && <audio ref={audioRef} src={audioUrl} controls />}
       </div>
     </div>
   );

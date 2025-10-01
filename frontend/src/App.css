@@ -1,20 +1,20 @@
 :root {
-  --bg-light: #f0f0f0;
+  --bg-light: #e0e0e0;
   --bg-dark: #3a3a3a;
-  --card-light: rgba(255,255,255,0.95);
-  --card-dark: rgba(44,44,44,0.95);
+  --card-light: rgba(255, 255, 255, 0.95);
+  --card-dark: rgba(44, 44, 44, 0.95);
   --text-light: #111;
   --text-dark: #eee;
   --primary: #4caf50;
   --primary-hover: #45a049;
   --accent: #1abc9c;
-  --shadow-light: rgba(0,0,0,0.25);
-  --shadow-dark: rgba(0,0,0,0.85);
-  --card-border-dark: rgba(255,255,255,0.05);
+  --shadow-light: rgba(0, 0, 0, 0.25);
+  --shadow-dark: rgba(0, 0, 0, 0.85);
+  --card-border-dark: rgba(255, 255, 255, 0.05);
 }
 
 body.light {
-  background: #d6d6d6;
+  background: var(--bg-light);
   color: var(--text-light);
 }
 
@@ -23,12 +23,12 @@ body.dark {
   color: var(--text-dark);
 }
 
-body, html {
+body,
+html {
   margin: 0;
-  padding: 0;
-  height: 100vh;
-  overflow: hidden;
   font-family: 'Inter', sans-serif;
+  height: 100%;
+  overflow: hidden;
   transition: all 0.3s ease;
 }
 
@@ -54,7 +54,8 @@ body, html {
   z-index: 1000;
   background-color: rgba(255, 255, 255, 0.95);
   color: #111;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 12px rgba(76, 175, 80, 0.4);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3),
+              0 0 12px rgba(76, 175, 80, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,14 +63,16 @@ body, html {
 }
 
 body.dark .theme-toggle {
-  background-color: rgba(50,50,50,0.95);
+  background-color: rgba(50, 50, 50, 0.95);
   color: #fff;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.6), 0 0 14px rgba(26, 188, 156, 0.5);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6),
+              0 0 14px rgba(26, 188, 156, 0.5);
 }
 
 .theme-toggle:hover {
   transform: scale(1.25);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.7), 0 0 20px rgba(26, 188, 156, 0.6);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.7),
+              0 0 20px rgba(26, 188, 156, 0.6);
 }
 
 .card {
@@ -85,6 +88,7 @@ body.dark .theme-toggle {
   box-shadow: 0 30px 70px var(--shadow-light);
   border: 1px solid rgba(0,0,0,0.05);
   transition: all 0.3s;
+  overflow: hidden;
 }
 
 body.dark .card {
@@ -92,13 +96,6 @@ body.dark .card {
   box-shadow: 0 30px 70px rgba(0,0,0,0.9);
   border: 1px solid var(--card-border-dark);
   background-image: linear-gradient(145deg, rgba(60,60,60,0.95), rgba(30,30,30,0.95));
-}
-
-body.light .card {
-  background: var(--card-light);
-  box-shadow: 0 30px 70px rgba(0,0,0,0.25);
-  border: 1px solid rgba(0,0,0,0.05);
-  background-image: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(240,240,240,0.95));
 }
 
 h1 {
@@ -115,7 +112,7 @@ textarea {
   height: 200px;
   padding: 22px;
   border-radius: 15px;
-  border: none;
+  border: 2px solid rgba(0,0,0,0.05);
   background: rgba(255,255,255,0.1);
   color: inherit;
   font-size: 1rem;
@@ -126,16 +123,9 @@ textarea {
 }
 
 body.dark textarea {
-  background: rgba(255,255,255,0.08);
-  box-shadow: inset 0 8px 25px rgba(0,0,0,0.4);
-  border: 1px solid rgba(255,255,255,0.2);
-}
-
-body.light textarea {
-  background: rgba(255,255,255,0.95);
-  box-shadow: inset 0 8px 25px rgba(0,0,0,0.15);
-  border: 1px solid rgba(0,0,0,0.2);
-  color: #111;
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(255,255,255,0.2);
+  box-shadow: inset 0 8px 25px rgba(0,0,0,0.3);
 }
 
 textarea:focus {
@@ -181,6 +171,7 @@ body.dark .generate-btn:hover {
   gap: 18px;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 15px;
 }
 
 .audio-controls button {
@@ -199,17 +190,22 @@ body.dark .generate-btn:hover {
   box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
 
+.audio-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 body.dark .audio-controls button {
   background: linear-gradient(135deg, #1abc9c, #16a085);
   box-shadow: 0 6px 25px rgba(0,0,0,0.7);
 }
 
-.audio-controls button:hover {
+.audio-controls button:hover:enabled {
   transform: scale(1.2);
   box-shadow: 0 8px 25px rgba(0,0,0,0.3);
 }
 
-body.dark .audio-controls button:hover {
+body.dark .audio-controls button:hover:enabled {
   box-shadow: 0 10px 30px rgba(0,0,0,0.85);
 }
 
@@ -219,4 +215,11 @@ body.dark .audio-controls button:hover {
 
 body.dark .audio-controls a button {
   background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+audio {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 10px;
+  outline: none;
 }
