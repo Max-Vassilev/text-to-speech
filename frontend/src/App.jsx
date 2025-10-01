@@ -80,6 +80,7 @@ function App() {
         </div>
         {audioUrl && <audio ref={audioRef} src={audioUrl} controls />}
       </div>
+      <footer className="footer">Powered by OpenAI TTS</footer>
     </div>
   );
 }

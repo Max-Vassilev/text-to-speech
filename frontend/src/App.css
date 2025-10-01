@@ -222,3 +222,17 @@ audio {
   border-radius: 10px;
   outline: none;
 }
+
+.footer {
+  position: fixed;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  pointer-events: none;
+}
+
+body.dark .footer {
+  color: var(--text-dark);
+}
