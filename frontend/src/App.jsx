@@ -57,10 +57,15 @@ function App() {
 
   useEffect(() => {
     if (!audioRef.current) return;
+
+    const audio = audioRef.current;
     const handleEnded = () => setIsPlaying(false);
-    audioRef.current.addEventListener("ended", handleEnded);
-    return () => audioRef.current.removeEventListener("ended", handleEnded);
-  }, [audioRef]);
+    audio.addEventListener("ended", handleEnded);
+
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [audioUrl]);
 
   return (
     <div className="app-container">
