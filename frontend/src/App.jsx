@@ -20,7 +20,7 @@ function App() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/tts",
+        "http://54.146.208.77:8000/tts", // Hardcoded IPV4 of EC2
         { text },
         { responseType: "blob" }
       );
