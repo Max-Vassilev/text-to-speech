@@ -15,12 +15,14 @@ function App() {
     document.body.className = darkMode ? "dark" : "light";
   }, [darkMode]);
 
+  const BACKEND_URL = "http://172.205.146.11:8000"; // Hardcoded BE URL (IPV4 and port 8000)
+
   const generateAudio = async () => {
     if (!text) return;
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://54.146.208.77:8000/tts", // Hardcoded IPV4 of EC2
+        `${BACKEND_URL}/tts`,
         { text },
         { responseType: "blob" }
       );
@@ -57,15 +59,10 @@ function App() {
 
   useEffect(() => {
     if (!audioRef.current) return;
-
-    const audio = audioRef.current;
     const handleEnded = () => setIsPlaying(false);
-    audio.addEventListener("ended", handleEnded);
-
-    return () => {
-      audio.removeEventListener("ended", handleEnded);
-    };
-  }, [audioUrl]);
+    audioRef.current.addEventListener("ended", handleEnded);
+    return () => audioRef.current.removeEventListener("ended", handleEnded);
+  }, [audioRef]);
 
   return (
     <div className="app-container">

@@ -1,4 +1,3 @@
-# main.py
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -9,7 +8,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://text-to-speech-fe.s3-website-us-east-1.amazonaws.com"], # Hardcoded FE URL
+    allow_origins=["https://texttospeech1fe.z6.web.core.windows.net"], # Hardcoded FE URL
     allow_methods=["*"],
     allow_headers=["*"],
 )
