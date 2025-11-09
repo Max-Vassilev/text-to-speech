@@ -15,7 +15,8 @@ function App() {
     document.body.className = darkMode ? "dark" : "light";
   }, [darkMode]);
 
-  const BACKEND_URL = "http://172.205.146.11:8000"; // Hardcoded BE URL (IPV4 and port 8000)
+  // Backend URL updated to use DNS with HTTPS (previously it was a hard-coded IP and port)
+  const BACKEND_URL = "https://text-to-speech-be.westeurope.cloudapp.azure.com";
 
   const generateAudio = async () => {
     if (!text) return;
